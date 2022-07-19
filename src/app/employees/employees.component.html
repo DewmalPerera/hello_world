@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-header">
+        <h5><b>{{title}}</b></h5>
+        <br>
+        {{message}}
+    </div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-2">Designation Filter:</div>
+        <div class="col-md-4">
+            <input type="text"  [ngModel]="designationFilter" (ngModelChange)="designationFilter=$event"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="cpl-md-6">
+            <h6>Filtered By : {{designationFilter}}</h6>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table" *ngIf="employees.length">
+            <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-primary" (click)="toggleIcon()">
+                            {{showIcon?"Hide":"Show"}} Avatar
+                        </button>
+                    </th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Designation</th>
+                    <th>Insureance Balance</th>
+                    <th>RBT Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of filteredEmployees" >
+                    <td>
+                        <img [src]="employee.icon" *ngIf="showIcon">
+                    </td>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.designation}}</td>
+                    <td>{{employee.insuranceBalance| currency:"LKR":"symbol":"3.2-2"|lkrFormatter:"Rs: "}}</td>
+                    <!-- <td>{{employee.rbtProgress}}</td> -->
+                    <td><em-progress-bar 
+                        [progress]='employee.rbtProgress'
+                        [firstName]='employee.firstName'
+                        (progressClick)='onMessageRecived($event)'></em-progress-bar></td>  
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
